@@ -32,3 +32,16 @@ export const existUserById = async(id = '') => { // validate for data ENUM(opcio
 
 }
 
+// si existe usuario por Correo y a su vez esta en estado true
+
+export const existUserByEmail = async(correo = '') => { // validate for data ENUM(opciones)
+    const existCorreoUser = await User.findOne({ // modelo
+        correo
+    });
+
+    if (!existCorreoUser || !existCorreoUser?.estado) {
+        throw new Error('User / Password does not right')
+    }
+}
+
+

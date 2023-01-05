@@ -1,0 +1,27 @@
+Conceptos=>
+Permite una autenticacion pasiva por parte de los clientes
+Ejemplo cada usuario tiene un token y es el que usan para autenticarse y validarse
+Los tokens son encryptados de doble via
+
+Estructura= >{
+  header: tiene info sobre el algoritmo de informacion y el formato en este caso JWT
+  payload: la informacion que creemos que esta en el token
+  firma: la firma debe coincidir con el que generamos 
+}: ve la informacion del json webtoken, no almacenar tarjetas de credito, aqui vamos
+a grabar id
+
+Dos tipos de token fisico o virtual:
+-Autenticacion a dos pasos piden la data estatica y dinamica que es la del token
+
+Por que usar tokens:
+-Variablde  de sesion hasta 5000 users claro por que como la sesion se almacena en el server 
+del backend caso contrario JWT se almacena en el lado del cliente ahi s ahorran recursos.
+
+
+Descifrar tokens:
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+};
+

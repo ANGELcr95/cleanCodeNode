@@ -2,6 +2,7 @@ import express from 'express';
 import path from "path";
 import cors from "cors";
 import users from "../routes/user"
+import auth from "../routes/auth"
 import dbConnection from '../database/config';
 
 export class Server {
@@ -9,6 +10,7 @@ export class Server {
         this.app = express(); 
         this.port = process.env.PORT;  // el hosting automaticmante me asigna en las variables de entorno un puerto
         this.usuariosPath = '/api/users'
+        this.loginPath = '/api/auth'
 
         // Connectar a base de datos
         this.databaseConnect()
@@ -36,6 +38,7 @@ export class Server {
     }
 
     routes() {
+        this.app.use(this.loginPath, auth)
         this.app.use(this.usuariosPath, users)
     }
 

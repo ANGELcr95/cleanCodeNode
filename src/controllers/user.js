@@ -28,13 +28,14 @@ export const usersPut = async ( req, res = response)=>{
     try {
         const {_id, password, google, ...resto } = req.body  // saco el id para que no lo intente actualizar y estalle
         const id  = req.params.id;
+        const strPassword = password.toString();
 
         if (password) {
             const salt = bcryptjs.genSaltSync()
-            resto.password = bcryptjs.hashSync(password, salt)
+            resto.password = bcryptjs.hashSync(strPassword, salt)
         }
 
-        const userPut = await User.findByIdAndUpdate(id, resto)
+        const userPut = await User.findByIdAndUpdate(id, resto, {new: true})
     
         res.json({
             msg: 'put, API -  controller',
@@ -80,13 +81,16 @@ export const usersDelete = async ( req, res = response)=>{
 
     try {
         const { id } = req.params;
+        const userAuth = req.userAuth
 
         // const user = await User.findByIdAndDelete(id);  con esto remuevo el usuario por completo de la data
 
-        const user = await User.findByIdAndUpdate(id, {estado: false})
+        const user = await User.findByIdAndUpdate(id, {estado: false}, {new: true})
 
         res.json({
-            msg: `the user ${user.nombre} have been desactivated successfully`
+            msg: `the user ${user.nombre} have been desactivated successfully`,
+            user,
+            userAuth
         });
         
     } catch (error) {

@@ -49,7 +49,8 @@ const userSchema = new Schema({
 // puedo crearme metodos o sobrescribir como el findOne
 
 userSchema.methods.toJSON = function() { // aqui lo que hago es oviar la subida de algunos clave valor
-    const {__v, password, ... user} = this.toObject();
+    const {__v, password, _id, ... user} = this.toObject();
+    user.uid = _id
     return user
 }
 
