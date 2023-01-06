@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { userLogin } from '../controllers/auth';
+import { userLogin, googleSignIn } from '../controllers/auth';
 import { existUserByEmail } from '../helpers/db-validators';
 import validatedInputs from '../middlewares/validated-inputs';
 
@@ -16,5 +16,11 @@ router.post('/login',[
     check('correo').custom(existUserByEmail),
     validatedInputs
 ],userLogin)
+
+
+router.post('/google',[
+    check('id_token', 'Token de google is necesary').not().isEmpty(),
+    validatedInputs
+],googleSignIn)
 
 export default router;
