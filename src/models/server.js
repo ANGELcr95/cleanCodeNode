@@ -5,8 +5,10 @@ import users from "../routes/user"
 import auth from "../routes/auth"
 import categories from "../routes/categorie"
 import products from "../routes/products"
+import uploads from "../routes/uploads"
 import dbConnection from '../database/config';
 import search from '../routes/search';
+import fileUpload from 'express-fileupload';
 
 export class Server {
     constructor( ){
@@ -18,7 +20,8 @@ export class Server {
             login: '/api/auth',
             categories: '/api/categories',
             products: '/api/products',
-            search: '/api/buscar'
+            search: '/api/search',
+            uploads: '/api/uploads'
         }
 
         // Connectar a base de datos
@@ -44,6 +47,13 @@ export class Server {
 
         // Public Directory
         this.app.use(express.static(path.join(__dirname, '../../public'))) 
+
+        // FileUpload - carga de archivos
+        this.app.use(fileUpload({
+            useTempFiles: true,
+            tempFileDir: '/tmp/',
+            createParentPath: true // crea carpeta si no exist en el path de guardar los files
+        }))
     }
 
     routes() {
@@ -52,6 +62,7 @@ export class Server {
         this.app.use(this.paths.categories, categories)
         this.app.use(this.paths.products, products)
         this.app.use(this.paths.search, search)
+        this.app.use(this.paths.uploads, uploads)
     }
 
     listen() {

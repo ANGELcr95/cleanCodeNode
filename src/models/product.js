@@ -44,6 +44,9 @@ const productsSchema = new Schema({
     disponible: {
         type: String,
         default: true
+    },
+    img:  {
+        type: String
     }
 })
 

@@ -67,5 +67,14 @@ export const existProduct = async(id = '') => {
     }
 }
 
+// validate collections permissions
+
+export const acceptedCollections = ( collection = '', collections = []) => {
+    if (!collections.includes(collection)) {
+        throw new Error(`The collection is not accepted ${collections}`)
+    }
+
+    return true
+}
 
 
