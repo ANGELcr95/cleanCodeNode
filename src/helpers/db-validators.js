@@ -1,5 +1,7 @@
 import Role from "../models/role"
 import User from "../models/user"
+import Categorie from "../models/categorie"
+import Product from "../models/product"
 
 export const isRoleValidated = async(rol = '') => { // validate for data ENUM(opciones)
     const existRol = await Role.findOne({rol})
@@ -43,5 +45,27 @@ export const existUserByEmail = async(correo = '') => { // validate for data ENU
         throw new Error('User / Password does not right')
     }
 }
+
+
+// si existe category in DB
+
+export const existCategory = async(id = '') => { 
+    const existCategory = await Categorie.findById(id);
+    
+    if (!existCategory || !existCategory?.estado) {
+        throw new Error('No existe category')
+    }
+}
+
+// si existe product in DB
+
+export const existProduct = async(id = '') => { 
+    const existProduct = await Product.findById(id);
+    
+    if (!existProduct || !existProduct?.estado) {
+        throw new Error('No existe product')
+    }
+}
+
 
 

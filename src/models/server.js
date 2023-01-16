@@ -3,14 +3,23 @@ import path from "path";
 import cors from "cors";
 import users from "../routes/user"
 import auth from "../routes/auth"
+import categories from "../routes/categorie"
+import products from "../routes/products"
 import dbConnection from '../database/config';
+import search from '../routes/search';
 
 export class Server {
     constructor( ){
         this.app = express(); 
         this.port = process.env.PORT;  // el hosting automaticmante me asigna en las variables de entorno un puerto
-        this.usuariosPath = '/api/users'
-        this.loginPath = '/api/auth'
+
+        this.paths = {
+            users: '/api/users',
+            login: '/api/auth',
+            categories: '/api/categories',
+            products: '/api/products',
+            search: '/api/buscar'
+        }
 
         // Connectar a base de datos
         this.databaseConnect()
@@ -38,8 +47,11 @@ export class Server {
     }
 
     routes() {
-        this.app.use(this.loginPath, auth)
-        this.app.use(this.usuariosPath, users)
+        this.app.use(this.paths.login, auth)
+        this.app.use(this.paths.users, users)
+        this.app.use(this.paths.categories, categories)
+        this.app.use(this.paths.products, products)
+        this.app.use(this.paths.search, search)
     }
 
     listen() {
