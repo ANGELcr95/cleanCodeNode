@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { showFiles, updateFiles, uploadsFiles } from '../controllers/uploads';
+import { showFiles, updateFiles, updateFilesCloudinary, uploadsFiles } from '../controllers/uploads';
 import { acceptedCollections } from '../helpers/db-validators';
 import { validateFile } from '../middlewares/validated-file';
 import validatedInputs from '../middlewares/validated-inputs';
@@ -28,6 +28,6 @@ router.put('/:collection/:id',[
     // check('id').custom(existUserById), es lo mismo solo que enviamos dos argumentos 
     // uno etatico es el  array y el otro es las colleccioes que recibimos de las request  entoces necesitamos ejecutat un callback
     validatedInputs
-],updateFiles)
+],updateFilesCloudinary)
 
 export default router;

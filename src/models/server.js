@@ -14,7 +14,6 @@ export class Server {
     constructor( ){
         this.app = express(); 
         this.port = process.env.PORT;  // el hosting automaticmante me asigna en las variables de entorno un puerto
-
         this.paths = {
             users: '/api/users',
             login: '/api/auth',
